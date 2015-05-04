@@ -6,16 +6,12 @@ class ApiController < ApplicationController
     case task
     when "test"
       test
-    end
     when "userAddPin"
       userAddPin
-    end
     when "getInstancesOf"
       getInstancesOf
-    end
     when "getUserPinsOfType"
       getUserPinsOfType
-    end
     when "userDeletePin"
       userDeletePin
     end
@@ -34,7 +30,8 @@ class ApiController < ApplicationController
   end
 
   #Create 
-  def userAddPin(userId, time, aggressionType, aggressionLat, aggressionLong)
+  def userAddPin
+    #params: userId, time, aggressionType, aggressionLat, aggressionLong
     render json: {
       userId: 1,
       time: "2015-03-28T23:14:04Z",
@@ -44,7 +41,8 @@ class ApiController < ApplicationController
   end
 
   #Read 
-  def getInstancesOf(aggressionType, withinRadius, withinDays)
+  def getInstancesOf
+    #params: aggressionType, withinRadius, withinDays
     render json: {
       aggression: "Sexism",
       instances: [ 
@@ -64,7 +62,8 @@ class ApiController < ApplicationController
       ]
     }
   end 
-  def getUserPinsOfType(aggressionType, userId, withinRadius, withinDays)
+  def getUserPinsOfType
+    #params: aggressionType, userId, withinRadius, withinDays
     render json: {
       userId: 1,
       aggression: "Racism",
@@ -87,7 +86,8 @@ class ApiController < ApplicationController
   #Update?
 
   #Delete? 
-  def userDeletePin(userId, time, aggressionType, aggressionLat, aggressionLong)
+  def userDeletePin
+    #params: userId, time, aggressionType, aggressionLat, aggressionLong)
     render json: {
       userId: 1,
       time: "2015-03-28T23:14:04Z",
