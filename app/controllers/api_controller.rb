@@ -89,7 +89,7 @@ class ApiController < ApplicationController
   def userDeletePin
     #params: userId, time, aggressionType, aggressionLat, aggressionLong)
 
-    if !(params[:userId].blank! or params[:time].blank! or params[:userId].blank! or params[:aggressionLat].blank! or params[:aggressionLong].blank?)
+    if !(params[:userId].blank? or params[:time].blank? or params[:aggressionType].blank? or params[:aggressionLat].blank? or params[:aggressionLong].blank?)
       render json: {
         userId: 1,
         time: "2015-03-28T23:14:04Z",
