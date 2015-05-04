@@ -29,9 +29,8 @@ class ApiController < ApplicationController
       }
   end
 
-  #Create 
+  #Create - userId, time, aggressionType, aggressionLat, aggressionLong
   def userAddPin
-    #params: userId, time, aggressionType, aggressionLat, aggressionLong
     render json: {
       userId: 1,
       time: "2015-03-28T23:14:04Z",
@@ -40,9 +39,8 @@ class ApiController < ApplicationController
     }
   end
 
-  #Read 
+  #Read - aggressionType, withinRadius, withinDays
   def getInstancesOf
-    #params: aggressionType, withinRadius, withinDays
     render json: {
       aggression: "Sexism",
       instances: [ 
@@ -62,8 +60,8 @@ class ApiController < ApplicationController
       ]
     }
   end 
+  # aggressionType, userId, withinRadius, withinDays
   def getUserPinsOfType
-    #params: aggressionType, userId, withinRadius, withinDays
     render json: {
       userId: 1,
       aggression: "Racism",
@@ -85,10 +83,8 @@ class ApiController < ApplicationController
 
   #Update?
 
-  #Delete? 
+  #Delete - userId, time, aggressionType, aggressionLat, aggressionLong
   def userDeletePin
-    #params: userId, time, aggressionType, aggressionLat, aggressionLong)
-
     if !(params[:userId].blank? or params[:time].blank? or params[:aggressionType].blank? or params[:aggressionLat].blank? or params[:aggressionLong].blank?)
       render json: {
         userId: 1,
