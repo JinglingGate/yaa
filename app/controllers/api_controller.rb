@@ -88,12 +88,19 @@ class ApiController < ApplicationController
   #Delete? 
   def userDeletePin
     #params: userId, time, aggressionType, aggressionLat, aggressionLong)
-    render json: {
-      userId: 1,
-      time: "2015-03-28T23:14:04Z",
-      aggression: "Sexism",
-      coordinate: [37.3492, -121.9381]
-    }
+
+    if !(params[:userId].blank! or params[:time].blank! or params[:userId].blank! or params[:aggressionLat].blank! or params[:aggressionLong].blank?)
+      render json: {
+        userId: 1,
+        time: "2015-03-28T23:14:04Z",
+        aggression: "Sexism",
+        coordinate: [37.3492, -121.9381]
+      }
+    else
+      render json: {
+        errorMessage: "Missing required parameter"
+      }
+    end
   end
 end
 
