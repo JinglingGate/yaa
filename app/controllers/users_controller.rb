@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
   def index
     @users = User.all
+    #render json: @users, status: 200
+    respond_to do |f|
+      f.html 
+      f.json { render json: @users, status: 200}
+    end
   end
 
   def new
