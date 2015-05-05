@@ -9,6 +9,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div class="container text-right">
+  <% if current_user %>
+    Signed in as <%= current_user.username %> | <%= link_to "Logout", '/logout' %>
+  <% else %>
+    <%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/signup' %>
+  <% end %>
+</div>
 
 <%= yield %>
 
