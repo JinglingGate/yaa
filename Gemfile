@@ -40,6 +40,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda', '~> 3.5.0'
   gem 'capybara'
+  gem 'launchy'
+  gem 'database_cleaner'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
