@@ -4,7 +4,7 @@ require 'rails_helper'
 #  pending "add some examples to (or delete) #{__FILE__}"
 #end
 
-describe User do
+RSpec.describe User do
   describe 'validations' do
     subject {User.new(first_name: 'charlene', last_name: 'estiva', email: 'charlene@test.com', username: 'cestiva', password: 'test123', password_confirmation: 'test123')}
     it {should validate_presence_of(:first_name)}
