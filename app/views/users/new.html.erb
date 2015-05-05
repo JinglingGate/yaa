@@ -1,0 +1,48 @@
+<h1 class="text-center">Signup</h1>
+
+<%= form_for @user, html: {class: 'form-horizontal col-sm-4 col-sm-offset-4'} do |f| %>
+  <% if @user.errors.any? %>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :first_name, class:'col-sm-4' %>
+    <div class="col-sm-8">
+      <%= f.text_field :first_name, class:'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :last_name, class:'col-sm-4' %>
+    <div class="col-sm-8">
+      <%= f.text_field :last_name, class:'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :email, class:'col-sm-4' %>
+    <div class="col-sm-8">
+      <%= f.text_field :email, class:'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :username, class: 'col-sm-4' %>
+    <div class="col-sm-8">
+      <%= f.text_field :username, class:'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :passowrd, class:'col-sm-4' %>
+    <div class="col-sm-8">
+      <%= f.password_field :password, class:'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :password_confirmation, class:'col-sm-4' %>
+    <div class="col-sm-8">
+      <%= f.password_field :password_confirmation, class:'form-control' %>
+    </div>
+  </div>
+  <%= f.submit "Submit", class:'btn btn-primary pull-right' %>
+<% end %>
