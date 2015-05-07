@@ -3,17 +3,88 @@ class ApiController < ApplicationController
 
   def delegate 
     task = params[:task]
-    case task
-    when "test"
-      test
-    when "userAddPin"
-      userAddPin
-    when "getInstancesOf"
-      getInstancesOf
-    when "getUserPinsOfType"
-      getUserPinsOfType
-    when "userDeletePin"
-      userDeletePin
+    if current_user
+      case task
+      when "signup"
+        render json: {error: "User already logged in"}, status: 404
+      when "login"
+        render json: {error: "User already logged in"}, status: 404
+      when "logout"
+        logout
+      when "test"
+        test
+      when "userAddPin"
+        userAddPin
+      when "getInstancesOf"
+        getInstancesOf
+      when "getUserPinsOfType"
+        getUserPinsOfType
+      when "userDeletePin"
+        userDeletePin
+      end
+    else
+      case task
+      when "signup"
+        signup
+      when "login"
+        login
+      end
+    end
+  end
+
+  def signup
+    user = User.new(first_name: params[:firstName], last_name: params[:lastName], email: params[:email], username: params[:username], password: params[:password], password_confirmation: params[:passwordConfirmation] )
+    if user.save
+      session[:user_id] = user.id
+      render json: {
+        task: params[:task],
+        status: "success",
+        userId: user.id,
+        username: user.username
+      }
+    else
+      render json: {
+        task: params[:task],
+        status: "failure",
+        message: user.errors.messages
+      }
+    end
+  end
+
+  def login
+    user = User.find_by_username(params[:username])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      render json: {
+        task: params[:task],
+        status: 'success',
+        userId: user.id,
+        username: user.username
+      }
+    else
+      render json: {
+        task: params[:task],
+        status: 'failure',
+        message: 'Incorrect password.' 
+      }
+    end
+  end
+
+  def logout
+    user = User.find_by_username(params[:user_id])
+    if session[:user_id]
+      session[:user_id] = nil
+      render json: {
+        task: params[:task],
+        status: 'success',
+        userId: params[:user_id]
+      }
+      else
+      render json: {
+        task: params[:task],
+        status: "failure",
+        message: "user not logged in"
+      }
     end
   end
 
