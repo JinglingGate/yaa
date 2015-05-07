@@ -1,0 +1,24 @@
+<div class="container">
+  <h1><%= @category.name + " pins" %></h1>
+
+  <table class="table table-striped">
+    <tr>
+      <th>Pin id</th>
+      <th>User id</th>
+      <th>Username</th>
+      <th>Date and time</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+    </tr>
+    <% @pins.each do |p| %>
+      <tr>
+        <td><%= p.id %></td>
+        <td><%= p.user.id %></td>
+        <td><%= p.user.username %></td>
+        <td><%= p.created_at.strftime("%B %d at %I:%M %p") %></td>
+        <td><%= p.lat %></td>
+        <td><%= p.long %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>
