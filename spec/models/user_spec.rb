@@ -15,6 +15,7 @@ RSpec.describe User do
     it {should validate_length_of(:username).is_at_least(7)}
     it {should have_secure_password}
     it {should validate_length_of(:password).is_at_least(7)}
+    it {should have_many(:pins)}
   end
 
   it 'has a capitalized first and last name' do 

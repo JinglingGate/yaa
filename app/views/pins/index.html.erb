@@ -1,0 +1,20 @@
+<div class="container">
+  <h1>List of pins</h1>
+
+  <table class="table table-sriped">
+    <tr>
+      <th>Id</th>
+      <th>Username</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+    </tr>
+    <tr>
+      <% @pins.each do |p| %>
+        <td><%= p.id %></td>
+        <td><%= p.user.username %></td>
+        <td><%= p.lat %></td>
+        <td><%= p.long %></td>
+      <% end %>
+    </tr>
+  </table>
+</div>

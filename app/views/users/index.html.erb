@@ -1,12 +1,18 @@
 <div class="container">
   <h1>List of users</h1>
-  <table>
+  <table class="table table-striped">
     <tr>
+      <th>Id</th>
       <th>Username</th>
+      <th>Fist name</th>
+      <th>Last name</th>
     </tr>
     <tr>
       <% @users.each do |u| %>
-      <td><%= u.username %></td>
+        <td><%= u.id %></td>
+        <td><%= u.username %></td>
+        <td><%= u.first_name %></td>
+        <td><%= u.last_name %></td>
       <% end %>
     </tr>
   </table>

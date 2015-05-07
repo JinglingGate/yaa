@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  has_many :pins
   validates_presence_of :first_name, :last_name, :email, :username
   validates_uniqueness_of :email
   validates :username, length: {minimum: 7}
