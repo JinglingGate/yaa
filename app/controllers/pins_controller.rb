@@ -7,6 +7,7 @@ class PinsController < ApplicationController
   def new
     @pin = Pin.new
     @users = User.all
+    @categories = Category.all
   end
 
   def create
@@ -32,6 +33,6 @@ class PinsController < ApplicationController
 
   private
   def pin_params
-    params.require(:pin).permit(:user_id, :lat, :long)
+    params.require(:pin).permit(:user_id, :lat, :long, :category_id)
   end
 end

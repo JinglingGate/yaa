@@ -1,0 +1,13 @@
+<div class="container">
+  <h1>Add category</h1>
+
+  <%= form_for @category, html: {class: 'form-horizontal col-sm-4'} do |f| %>
+    <div class="form-group">
+      <%= f.label :name, class:'col-sm-4' %>
+      <div class="col-sm-8">
+        <%= f.text_field :name, class:'form-control' %>
+      </div>
+    </div>
+    <%= f.submit 'Submit', class:'btn btn-primary pull-right' %>
+  <% end %>
+</div>

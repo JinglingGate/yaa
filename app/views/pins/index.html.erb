@@ -1,20 +1,22 @@
 <div class="container">
   <h1>List of pins</h1>
 
-  <table class="table table-sriped">
+  <table class="table table-striped">
     <tr>
       <th>Id</th>
       <th>Username</th>
+      <th>Type</th>
       <th>Latitude</th>
       <th>Longitude</th>
     </tr>
-    <tr>
-      <% @pins.each do |p| %>
+    <% @pins.each do |p| %>
+      <tr>
         <td><%= p.id %></td>
         <td><%= p.user.username %></td>
+        <td><%= p.category.name %></td>
         <td><%= p.lat %></td>
         <td><%= p.long %></td>
-      <% end %>
-    </tr>
+      </tr>
+    <% end %>
   </table>
 </div>
