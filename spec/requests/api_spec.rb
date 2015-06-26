@@ -88,8 +88,23 @@ RSpec.describe "Api", type: :request do
     end
   end
 
-  describe 'POST pin' do
-    it 'creates a pin  users location' do
+  describe 'POST userAddPin' do
+    it 'creates a pin at user location' do
+      user = User.create(first_name:'Charlene', last_name:'Estiva', email:'example@gmail.com', username:'cestiva', password:'test123', password_confirmation:'test123')
+      cat1 = Category.create(name:'Sexism')
+      #pin1 = Pin.create(user_id: user.id, latitude: 37.7510695, longitude: -122.42508219999998, category_id: cat1)
+
+      post '/api', {format:'json', task:'userAddPin', user_id: user.id, latitude: 37.7510695, longitude: -122.42508219999998, type: 'Sexism'}
+
+      expected_json = {
+        task: 'userAddPin',
+        status: 'success',
+        userId: user.id,
+        time: pin.created_at,
+        aggressionType: 'sexsim', 
+        latitude: 37.7510695,
+        longidtude: -122.42508219999998
+      }
     end 
   end
 end
