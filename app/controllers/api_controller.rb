@@ -3,32 +3,23 @@ class ApiController < ApplicationController
 
   def delegate 
     task = params[:task]
-    if current_user
-      case task
-      when "signup"
-        render json: {error: "User already logged in"}, status: 404
-      when "login"
-        render json: {error: "User already logged in"}, status: 404
-      when "logout"
-        logout
-      when "test"
-        test
-      when "userAddPin"
-        userAddPin
-      when "getInstancesOf"
-        getInstancesOf
-      when "getUserPinsOfType"
-        getUserPinsOfType
-      when "userDeletePin"
-        userDeletePin
-      end
-    else
-      case task
-      when "signup"
-        signup
-      when "login"
-        login
-      end
+    case task
+    when "signup"
+      render json: {error: "User already logged in"}, status: 404
+    when "login"
+      render json: {error: "User already logged in"}, status: 404
+    when "logout"
+      logout
+    when "test"
+      test
+    when "userAddPin"
+      userAddPin
+    when "getInstancesOf"
+      getInstancesOf
+    when "getUserPinsOfType"
+      getUserPinsOfType
+    when "userDeletePin"
+      userDeletePin
     end
   end
 
@@ -102,35 +93,25 @@ class ApiController < ApplicationController
 
   #Create - userId, time, aggressionType, aggressionLat, aggressionLong
   def userAddPin
+    pin = Pin.create(latitude: params[:coordinate][0], longitude: params[:coordinate][1], aggression_type: params[:aggressionType].downcase);
+    
     render json: {
-      userId: 1,
-      time: "2015-03-28T23:14:04Z",
-      aggressionType: "Sexism",
-      coordinate: [37.3492, -121.9381]
+      time: pin.created_at,
+      aggressionType: pin.aggression_type.capitalize,
+      coordinate: pin.coordinate
     }
   end
 
   #Read - aggressionType, withinRadius, withinDays
   def getInstancesOf
+    pins = Pin.where(aggression_type: params[:aggressionType].downcase)
+    instances = pins.map{|p| {time: p.created_at, coordinate: p.coordinate}}
     render json: {
-      aggression: "Sexism",
-      instances: [ 
-        {
-          userId: 1,
-          time: "2015-04-1T12:04:00Z",
-          coordinate: [37.3492, -121.9876]
-        },{
-          userId: 2,
-          time: "2015-04-2T12:04:00Z",
-          coordinate: [37.3492, -121.8765]
-        },{
-          userId: 3,
-          time: "2015-04-3T12:04:00Z",
-          coordinate: [37.3492, -121.7654]
-        }  
-      ]
+      aggression: params[:aggressionType],
+      instances: instances
     }
   end 
+
   # aggressionType, userId, withinRadius, withinDays
   def getUserPinsOfType
     render json: {
