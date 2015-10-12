@@ -19,7 +19,7 @@ development:
   encoding: unicode
   database: yaa_development
   pool: 5
-  username: emma
+  username: emmalindsay
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -48,7 +48,7 @@ test:
   encoding: unicode
   database: yaa_test
   pool: 5
-  username: emma
+  username: emmalindsay
   password:
 
 production:

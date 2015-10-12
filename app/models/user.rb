@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_many :pins
   validates_presence_of :first_name, :last_name, :email, :username
   validates_uniqueness_of :email
-  validates :username, length: {minimum: 7}
+  validates :username, length: {minimum: 3}
   has_secure_password  
   validates :password, length: {minimum: 7}
   validates_presence_of :password_confirmation

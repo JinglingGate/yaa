@@ -79,21 +79,9 @@ class ApiController < ApplicationController
     end
   end
 
-  def test
-    render json: {
-      paramOne: "One",
-      paramTwo: "Two",
-      array: ["one", "two", "three"],
-      hash: {
-          keyOne: "valOne",
-          keyTwo: "valTwo"
-        }
-      }
-  end
-
   #Create - userId, time, aggressionType, aggressionLat, aggressionLong
   def userAddPin
-    pin = Pin.create(latitude: params[:coordinate][0], longitude: params[:coordinate][1], aggression_type: params[:aggressionType].downcase);
+    pin = Pin.create(lat: params[:aggressionLat], lng: params[:aggressionLong], aggression_type: params[:aggressionType].downcase, user_id: params[:userId]);
     
     render json: {
       time: pin.created_at,
@@ -105,6 +93,8 @@ class ApiController < ApplicationController
   #Read - aggressionType, withinRadius, withinDays
   def getInstancesOf
     pins = Pin.where(aggression_type: params[:aggressionType].downcase)
+    pins = pins.where("created_at > ?", params[:withinDays].to_i.days.ago) if params[:withinDays]
+    pins = pins.within(params[:withinRadius], origin: [params[:withinLat].to_f, params[:withinLong].to_f]) if (params[:withinRadius] && params[:withinLat] && params[:withinLong])
     instances = pins.map{|p| {time: p.created_at, coordinate: p.coordinate}}
     render json: {
       aggression: params[:aggressionType],
@@ -114,35 +104,33 @@ class ApiController < ApplicationController
 
   # aggressionType, userId, withinRadius, withinDays
   def getUserPinsOfType
+    user = User.find(params[:userId])
+    pins = user.pins.where(aggression_type: params[:aggressionType].downcase)
+    pins = pins.where("created_at > ?", params[:withinDays].to_i.days.ago) if params[:withinDays]
+    pins = pins.within(params[:withinRadius], origin: [params[:withinLat].to_f, params[:withinLong].to_f]) if (params[:withinRadius] && params[:withinLat] && params[:withinLong])
+    instances = pins.map{|p| {time: p.created_at, coordinate: p.coordinate}}
     render json: {
-      userId: 1,
-      aggression: "Racism",
-      instances: [ 
-        {
-          userId: 1,
-          time: "2015-04-1T12:04:00Z",
-          coordinate: [37.3492, -121.9876]
-        },{
-          time: "2015-04-2T12:04:00Z",
-          coordinate: [37.3492, -121.8765]
-        },{
-          time: "2015-04-3T12:04:00Z",
-          coordinate: [37.3492, -121.7654]
-        }  
-      ]
+      userId: params[:userId],
+      aggression: params[:aggressionType],
+      instances: instances
     }
   end
 
-  #Update?
 
   #Delete - userId, time, aggressionType, aggressionLat, aggressionLong
   def userDeletePin
     if !(params[:userId].blank? or params[:time].blank? or params[:aggressionType].blank? or params[:aggressionLat].blank? or params[:aggressionLong].blank?)
+      user = User.find(params[:userId])
+      pins = user.pins.where(aggression_type: params[:aggressionType], lat: params[:aggressionLat], lng: params[:aggressionLong])
+      deleted_pins = 0
+      pins.each do |pin|
+        if (pin.created_at - Time.new(params[:time])).abs < 300
+            pin.destroy
+            deleted_pins = deleted_pins + 1
+        end
+      end
       render json: {
-        userId: 1,
-        time: "2015-03-28T23:14:04Z",
-        aggression: "Sexism",
-        coordinate: [37.3492, -121.9381]
+        message: "Deleted #{deleted_pins} pins"
       }
     else
       render json: {

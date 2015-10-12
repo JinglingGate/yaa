@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150902034427) do
+ActiveRecord::Schema.define(version: 20151012204925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "pins", force: :cascade do |t|
     t.integer  "user_id"
-    t.decimal  "latitude"
-    t.decimal  "longitude"
+    t.decimal  "lat"
+    t.decimal  "lng"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "aggression_type"
